@@ -14,10 +14,3 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-
-import 'src/Application.dart';
-
-void main() {
-  runApp(const Application());
-}

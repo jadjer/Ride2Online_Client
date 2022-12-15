@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-
-import 'src/Application.dart';
-
-void main() {
-  runApp(const Application());
-}
+export 'routing/SimpleRouterDelegate.dart';
+export 'routing/ParsedRoute.dart';
+export 'routing/TemplateRouteParser.dart';
+export 'routing/RouteState.dart';

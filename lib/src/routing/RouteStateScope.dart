@@ -14,8 +14,19 @@
  * limitations under the License.
  */
 
-import 'package:ride2online/data/repositories/auth/AuthRepository.dart';
+import 'package:flutter/widgets.dart';
 
-abstract class AppContainer {
-    AuthRepository getAuthRepository();
+import 'RouteState.dart';
+
+/// Provides the current [RouteState] to descendant widgets in the tree.
+class RouteStateScope extends InheritedNotifier<RouteState> {
+  const RouteStateScope({
+    required super.notifier,
+    required super.child,
+    super.key,
+  });
+
+  static RouteState of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<RouteStateScope>()!.notifier!;
 }
+

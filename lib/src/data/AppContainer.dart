@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'repository/auth/AuthRepository.dart';
 
-import 'src/Application.dart';
-
-void main() {
-  runApp(const Application());
+abstract class AppContainer {
+    AuthRepository getAuthRepository();
 }

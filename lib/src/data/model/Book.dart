@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'Author.dart';
 
-import 'src/Application.dart';
+class Book {
+  final int id;
+  final String title;
+  final Author author;
+  final bool isPopular;
+  final bool isNew;
 
-void main() {
-  runApp(const Application());
+  Book(this.id, this.title, this.isPopular, this.isNew, this.author);
 }

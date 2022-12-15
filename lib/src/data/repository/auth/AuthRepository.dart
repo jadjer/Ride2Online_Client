@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'dart:ffi';
 
-import 'src/Application.dart';
-
-void main() {
-  runApp(const Application());
+abstract class AuthRepository {
+  void login(String username, String password);
+  void register(String username, String password, String phone, Int verifyCode);
 }

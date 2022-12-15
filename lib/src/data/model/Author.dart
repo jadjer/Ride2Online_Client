@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'Book.dart';
 
-import 'src/Application.dart';
+class Author {
+  final int id;
+  final String name;
+  final books = <Book>[];
 
-void main() {
-  runApp(const Application());
+  Author(this.id, this.name);
 }

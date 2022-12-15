@@ -14,10 +14,24 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+class User {
+  int? id;
+  String? username;
+  String? phone;
 
-import 'src/Application.dart';
+  User(this.id, this.username, this.phone);
 
-void main() {
-  runApp(const Application());
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    username = json['username'];
+    phone = json['phone'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['phone'] = phone;
+    return data;
+  }
 }

@@ -14,17 +14,6 @@
  * limitations under the License.
  */
 
-import 'dart:io';
-
-import 'package:ride2online/data/repositories/auth/AuthRepository.dart';
-
-class AuthRepositoryImpl implements AuthRepository {
-
-  void login() {
-
-    
-    var client = HttpClient();
-    client.
-  }
-
-}
+export 'data/model/Author.dart';
+export 'data/model/Book.dart';
+export 'data/model/Library.dart';

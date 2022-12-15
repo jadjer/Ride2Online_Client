@@ -14,6 +14,19 @@
  * limitations under the License.
  */
 
-abstract class AuthRepository {
+import 'dart:ffi';
+import 'dart:io';
 
+import 'AuthRepository.dart';
+
+class AuthRepositoryImpl implements AuthRepository {
+  @override
+  void login(String username, String password) {
+    // TODO: implement login
+  }
+
+  @override
+  void register(String username, String password, String phone, Int verifyCode) {
+    // TODO: implement register
+  }
 }

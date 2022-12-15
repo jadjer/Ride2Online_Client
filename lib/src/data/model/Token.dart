@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+class Token {
+  String? tokenAccess;
+  String? tokenRefresh;
 
-import 'src/Application.dart';
+  Token(this.tokenAccess, this.tokenRefresh);
 
-void main() {
-  runApp(const Application());
+  Token.fromJson(Map<String, dynamic> json) {
+    tokenAccess = json['token_access'];
+    tokenRefresh = json['token_refresh'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['token_access'] = tokenAccess;
+    data['token_refresh'] = tokenRefresh;
+    return data;
+  }
 }

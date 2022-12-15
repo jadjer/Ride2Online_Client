@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'AppContainer.dart';
+import 'repository/auth/AuthRepository.dart';
+import 'repository/auth/AuthRepositoryImpl.dart';
 
-import 'src/Application.dart';
+class AppContainerImpl implements AppContainer {
 
-void main() {
-  runApp(const Application());
+  @override
+  AuthRepository getAuthRepository() {
+    return AuthRepositoryImpl();
+  }
 }
