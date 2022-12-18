@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+import 'package:ride2online/src/data/model/AuthResponse.dart';
 
-import 'src/App.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
-
-  runApp(application);
+abstract class AuthRepository {
+  Future<AuthResponse> login(String username, String password);
+  Future<AuthResponse> register(String username, String phone, String password, int verificationCode);
 }

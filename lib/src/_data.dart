@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
-
-import 'src/App.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
-
-  runApp(application);
-}
+export 'data/domain/Auth.dart';
+export 'data/domain/Event.dart';
+export 'data/domain/Location.dart';
+export 'data/domain/Profile.dart';
+export 'data/domain/Token.dart';
+export 'data/domain/User.dart';

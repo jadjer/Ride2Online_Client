@@ -15,15 +15,29 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+import 'package:ride2online/src/_data.dart';
 
-import 'src/App.dart';
+class EventList extends StatelessWidget {
+  final List<Event> events;
+  final ValueChanged<Event>? onTap;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  const EventList({
+    required this.events,
+    this.onTap,
+    super.key,
+  });
 
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
-
-  runApp(application);
+  @override
+  Widget build(BuildContext context) => ListView.builder(
+    itemCount: events.length,
+    itemBuilder: (context, index) => ListTile(
+      title: Text(
+        events[index].title,
+      ),
+      subtitle: Text(
+        events[index].organizer.username,
+      ),
+      onTap: onTap != null ? () => onTap!(events[index]) : null,
+    ),
+  );
 }

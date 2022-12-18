@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+import 'package:http/http.dart' as http;
+import 'package:ride2online/src/data/repository/EventRepository.dart';
 
-import 'src/App.dart';
+class EventRepositoryImpl implements EventRepository {
+  final String basePath = 'https://auth.ride2online.jadjer.by';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  late final http.Client _client;
 
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
-
-  runApp(application);
+  EventRepositoryImpl(http.Client client) {
+    _client = client;
+  }
 }

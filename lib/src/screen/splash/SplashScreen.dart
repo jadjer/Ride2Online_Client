@@ -15,15 +15,29 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+import 'package:provider/provider.dart';
+import 'package:ride2online/src/service/AuthViewModel.dart';
 
-import 'src/App.dart';
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  @override
+  Widget build(BuildContext context) {
+    final auth = context.watch<AuthService>();
 
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
-
-  runApp(application);
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+              },
+              child: const Text('Login'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

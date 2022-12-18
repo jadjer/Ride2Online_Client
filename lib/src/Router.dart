@@ -14,16 +14,4 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
-
-import 'src/App.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
-
-  runApp(application);
-}
+enum RouteDefine { splash, login, register, events, eventDetail }

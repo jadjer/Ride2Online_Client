@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+import 'package:ride2online/src/_data.dart';
 
-import 'src/App.dart';
+class TokenResponse {
+  final bool success;
+  final String message;
+  final Token? payload;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  TokenResponse({
+    required this.success,
+    required this.message,
+    this.payload,
+  });
 
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
+  factory TokenResponse.fromJson(Map<String, dynamic> json) {
+    final success = json['success'] as bool;
+    final message = json['message'] as String;
 
-  runApp(application);
+    if (!success) return TokenResponse(success: success, message: message);
+
+    return TokenResponse(
+      success: success,
+      message: message,
+      payload: Token.fromJson(json['payload']),
+    );
+  }
 }

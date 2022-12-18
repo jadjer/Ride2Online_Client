@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-import 'repository/auth/AuthRepository.dart';
+import 'repository/AuthRepository.dart';
+import 'repository/EventRepository.dart';
 
 abstract class AppContainer {
-    AuthRepository getAuthRepository();
+  AuthRepository getAuthRepository();
+  EventRepository getEventRepository();
 }

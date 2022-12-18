@@ -14,14 +14,24 @@
  * limitations under the License.
  */
 
-import 'AppContainer.dart';
-import 'repository/auth/AuthRepository.dart';
-import 'repository/auth/AuthRepositoryImpl.dart';
+import 'package:http/http.dart' as http;
+import 'package:ride2online/src/data/AppContainer.dart';
+import 'package:ride2online/src/data/repository/AuthRepository.dart';
+import 'package:ride2online/src/data/repository/EventRepository.dart';
+import 'package:ride2online/src/data/repository/impl/AuthRepositoryImpl.dart';
+import 'package:ride2online/src/data/repository/impl/EventRepositoryImpl.dart';
 
 class AppContainerImpl implements AppContainer {
 
+  final _client = http.Client();
+
   @override
   AuthRepository getAuthRepository() {
-    return AuthRepositoryImpl();
+    return AuthRepositoryImpl(_client);
+  }
+
+  @override
+  EventRepository getEventRepository() {
+    throw EventRepositoryImpl(_client);
   }
 }

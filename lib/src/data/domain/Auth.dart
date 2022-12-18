@@ -14,16 +14,29 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+import 'Token.dart';
+import 'User.dart';
 
-import 'src/App.dart';
+class Auth {
+  User user;
+  Token token;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  Auth({
+    required this.user,
+    required this.token,
+  });
 
-  final appContainer = AppContainerImpl();
-  final application = App(appContainer: appContainer);
+  factory Auth.fromJson(Map<String, dynamic> json) {
+    return Auth(
+      user: User.fromJson(json['user']),
+      token: Token.fromJson(json['token']),
+    );
+  }
 
-  runApp(application);
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'user': user.toJson(),
+      'token': token.toJson(),
+    };
+  }
 }
