@@ -15,7 +15,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
 
 import '../../_data.dart';
 import '../user/UserDetailsScreen.dart';
@@ -23,10 +22,7 @@ import '../user/UserDetailsScreen.dart';
 class EventDetailsScreen extends StatelessWidget {
   final Event event;
 
-  const EventDetailsScreen({
-    required this.event,
-    super.key,
-  });
+  const EventDetailsScreen({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +46,10 @@ class EventDetailsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).push<void>(
                   MaterialPageRoute<void>(
-                    builder: (context) =>
-                        UserDetailsScreen(user: event.organizer),
+                    builder: (context) => UserDetailsScreen(user: event.organizer),
                   ),
                 );
               },
-            ),
-            Link(
-              uri: Uri.parse('/author/${event.organizer.id}'),
-              builder: (context, followLink) => TextButton(
-                onPressed: followLink,
-                child: const Text('View author (Link)'),
-              ),
             ),
           ],
         ),

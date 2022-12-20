@@ -14,4 +14,13 @@
  * limitations under the License.
  */
 
-enum RouteDefine { splash, login, register, events, eventDetail }
+import 'package:flutter/material.dart';
+
+class ErrorScreen extends StatelessWidget {
+  const ErrorScreen({super.key, Exception? error});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
+}

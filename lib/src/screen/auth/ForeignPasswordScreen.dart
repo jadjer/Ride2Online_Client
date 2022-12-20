@@ -15,36 +15,12 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:ride2online/src/_data.dart';
-import 'package:ride2online/src/widget/EventList.dart';
 
-class EventsScreen extends StatefulWidget {
-  const EventsScreen({
-    super.key,
-  });
-
-  @override
-  State<EventsScreen> createState() => _EventsScreenState();
-}
-
-class _EventsScreenState extends State<EventsScreen> {
+class ForeignPasswordScreen extends StatelessWidget {
+  const ForeignPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Events'),
-      ),
-      body: EventList(
-        events: const [],
-        onTap: _handleBookTapped,
-      ),
-    );
-  }
-
-  // RouteState get _routeState => RouteStateScope.of(context);
-
-  void _handleBookTapped(Event event) {
-    // _routeState.go('/events/${event.id}');
+    return const Scaffold();
   }
 }

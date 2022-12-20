@@ -15,8 +15,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:ride2online/src/service/AuthViewModel.dart';
-import 'package:url_launcher/link.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -65,13 +63,6 @@ class SettingsContent extends StatelessWidget {
                 // AuthManagerScope.of(context).signOut();
               },
               child: const Text('Sign out'),
-            ),
-            Link(
-              uri: Uri.parse('/book/0'),
-              builder: (context, followLink) => TextButton(
-                onPressed: followLink,
-                child: const Text('Go directly to /book/0 (Link)'),
-              ),
             ),
             TextButton(
               child: const Text('Go directly to /book/0 (RouteState)'),

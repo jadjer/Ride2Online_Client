@@ -4,24 +4,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:ride2online/src/service/AuthViewModel.dart';
+import 'package:ride2online/src/data/model/LoginRequest.dart';
 
 class LoginScreen extends StatelessWidget {
   final _isShow = true;
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  LoginScreen({super.key});
+  LoginScreen({super.key, required Null Function(LoginRequest request) onSignIn});
 
   @override
   Widget build(BuildContext context) {
-    final auth = context.watch<AuthService>();
-
-    final logo = Visibility(
-      visible: _isShow,
-      child: SvgPicture.asset('assets/svg/logo_full.svg'),
-    );
+    final logo = SvgPicture.asset('assets/svg/logo_full.svg');
 
     final usernameField = TextField(
       autofocus: true,
@@ -56,7 +50,7 @@ class LoginScreen extends StatelessWidget {
             passwordField,
             TextButton(
               onPressed: () async {
-                await auth.signIn(_usernameController.value.text, _passwordController.value.text);
+                // await auth.signIn(_usernameController.value.text, _passwordController.value.text);
               },
               child: const Text('Sign in'),
             ),

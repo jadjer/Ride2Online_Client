@@ -18,15 +18,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ride2online/src/data/repository/AuthRepository.dart';
 
-class AuthService extends ChangeNotifier {
-  final _storage = const FlutterSecureStorage();
-
+class AppAuth extends ChangeNotifier {
   late bool _authenticated;
   late AuthRepository _repository;
+  late FlutterSecureStorage _storage;
 
-  AuthService(AuthRepository repository) {
+  AppAuth(AuthRepository repository) {
     _authenticated = false;
     _repository = repository;
+    _storage = const FlutterSecureStorage();
   }
 
   bool get authenticated => _authenticated;
@@ -43,7 +43,7 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signUp(String username, String phone, String password, int code) async {
+  Future<void> signUp(String phone, String username, String password, int code) async {
     var result = await _repository.register(username, phone, password, code);
     if (result.success) {
       await _storage.write(key: 'token_access', value: result.payload!.token.tokenAccess);
@@ -63,5 +63,3 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-

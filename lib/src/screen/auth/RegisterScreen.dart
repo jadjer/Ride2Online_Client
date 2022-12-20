@@ -15,21 +15,18 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:ride2online/src/data/model/RegisterRequest.dart';
 
 class Credentials {
+  final String phone;
   final String username;
   final String password;
 
-  Credentials(this.username, this.password);
+  Credentials(this.phone, this.username, this.password);
 }
 
 class RegisterScreen extends StatefulWidget {
-  final ValueChanged<Credentials> onSignIn;
-
-  const RegisterScreen({
-    required this.onSignIn,
-    super.key,
-  });
+  const RegisterScreen({super.key, required Null Function(RegisterRequest request) onSignUp});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -64,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.all(16),
                 child: TextButton(
                   onPressed: () async {
-                    widget.onSignIn(Credentials(_usernameController.value.text, _passwordController.value.text));
+                    // widget.onSignIn(Credentials(_usernameController.value.text, _passwordController.value.text));
                   },
                   child: const Text('Sign in'),
                 ),

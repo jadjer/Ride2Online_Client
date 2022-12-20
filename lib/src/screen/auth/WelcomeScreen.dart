@@ -14,29 +14,17 @@
  * limitations under the License.
  */
 
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:ride2online/src/screen/auth/WelcomeScreen.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final logo = SvgPicture.asset(
-      'assets/svg/logo_full.svg',
-      color: Colors.white,
-    );
-
-    return AnimatedSplashScreen(
-      splash: logo,
-      nextScreen: const WelcomeScreen(),
-      centered: true,
-      backgroundColor: Colors.black,
-      splashTransition: SplashTransition.slideTransition,
-      pageTransitionType: PageTransitionType.leftToRightWithFade,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Welcome'),
+      ),
     );
   }
 }

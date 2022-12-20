@@ -15,15 +15,12 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
 
-import 'src/App.dart';
+class EventEditScreen extends StatelessWidget {
+  const EventEditScreen({super.key});
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final appContainer = AppContainerImpl();
-  final app = App(appContainer);
-
-  runApp(app);
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold();
+  }
 }

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+class LoginRequest {
+  final String username;
+  final String password;
 
-import 'src/App.dart';
+  LoginRequest({required this.username, required this.password});
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  final appContainer = AppContainerImpl();
-  final app = App(appContainer);
-
-  runApp(app);
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'username': username,
+      'password': password,
+    };
+  }
 }

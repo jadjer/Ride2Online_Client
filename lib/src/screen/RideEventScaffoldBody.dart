@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ride2online/src/widget/FadeTransitionPage.dart';
 
 import 'RideEventScaffold.dart';
-import 'event/EventsScreen.dart';
+import 'events/EventsScreen.dart';
 import 'setting/SettingsScreen.dart';
 
 class RideEventScaffoldBody extends StatelessWidget {

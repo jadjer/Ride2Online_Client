@@ -18,6 +18,6 @@ import 'repository/AuthRepository.dart';
 import 'repository/EventRepository.dart';
 
 abstract class AppContainer {
-  AuthRepository getAuthRepository();
-  EventRepository getEventRepository();
+  AuthRepository get authRepository;
+  EventRepository get eventRepository;
 }

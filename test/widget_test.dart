@@ -8,14 +8,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ride2online/src/App.dart';
+import 'package:ride2online/src/AppAuth.dart';
 import 'package:ride2online/src/data/AppContainerImpl.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    var appContainer = AppContainerImpl();
+    final appContainer = AppContainerImpl();
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(App(appContainer: appContainer));
+    await tester.pumpWidget(App(appContainer));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

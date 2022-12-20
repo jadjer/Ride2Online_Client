@@ -17,66 +17,44 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:ride2online/src/data/AppContainerImpl.dart';
+import 'package:ride2online/src/data/AppContainer.dart';
 
-import 'Router.dart';
-import 'screen/auth/LoginScreen.dart';
+import 'AppAuth.dart';
+import 'AppRouter.dart';
 import 'screen/splash/SplashScreen.dart';
-import 'service/AuthViewModel.dart';
 import 'theme/AppThemeDark.dart';
 import 'theme/AppThemeLight.dart';
 
 class App extends StatelessWidget {
-  late final AuthService _authService;
+  late final AppContainer _appContainer;
+  late final AppAuth _appAuth;
+  late final AppRouter _appRouter;
 
-  App({required AppContainerImpl appContainer, super.key}) {
-    _authService = AuthService(appContainer.getAuthRepository());
+  App(AppContainer appContainer, {super.key}) {
+    _appContainer = appContainer;
+    _appAuth = AppAuth(_appContainer.authRepository);
+    _appRouter = AppRouter(appAuth: _appAuth);
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: _authService),
+        ChangeNotifierProvider<AppAuth>.value(value: _appAuth),
+        Provider<AppRouter>.value(value: _appRouter),
       ],
-      child: MaterialApp.router(
-        title: 'Moto events',
-        theme: AppThemeLight().toThemeData(),
-        darkTheme: AppThemeDark().toThemeData(),
-        themeMode: ThemeMode.system,
-        routerConfig: GoRouter(
-          routes: [
-            GoRoute(
-              name: RouteDefine.splash.name,
-              path: '/',
-              pageBuilder: (context, state) => MaterialPage<void>(
-                key: state.pageKey,
-                child: const SplashScreen(),
-              ),
-            ),
-            GoRoute(
-              name: RouteDefine.login.name,
-              path: '/login',
-              pageBuilder: (context, state) => MaterialPage<void>(
-                key: state.pageKey,
-                child: LoginScreen(),
-              ),
-            ),
-          ],
-          redirect: (BuildContext context, GoRouterState state) {
-            final authenticated = _authService.authenticated;
-            final goingToLogin = (state.name == RouteDefine.login.name);
+      child: Builder(
+        builder: (BuildContext context) {
+          final router = context.watch<AppRouter>().router;
 
-            // the user is not logged in and not headed to /login, they need to login
-            if (!authenticated && !goingToLogin) return context.namedLocation(RouteDefine.login.name);
-
-            // the user is logged in and headed to /login, no need to login again
-            if (authenticated && goingToLogin) return context.namedLocation(RouteDefine.events.name);
-
-            // no need to redirect at all
-            return null;
-          },
-        ),
+          return MaterialApp.router(
+            routerConfig: router,
+            title: 'Moto events',
+            theme: AppThemeLight().toThemeData(),
+            darkTheme: AppThemeDark().toThemeData(),
+            themeMode: ThemeMode.system,
+          );
+        },
       ),
     );
   }

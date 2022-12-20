@@ -26,12 +26,8 @@ class AppContainerImpl implements AppContainer {
   final _client = http.Client();
 
   @override
-  AuthRepository getAuthRepository() {
-    return AuthRepositoryImpl(_client);
-  }
+  AuthRepository get authRepository =>  AuthRepositoryImpl(_client);
 
   @override
-  EventRepository getEventRepository() {
-    throw EventRepositoryImpl(_client);
-  }
+  EventRepository get eventRepository => EventRepositoryImpl(_client);
 }
