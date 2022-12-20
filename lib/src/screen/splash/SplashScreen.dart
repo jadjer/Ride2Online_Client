@@ -18,7 +18,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:ride2online/src/screen/auth/WelcomeScreen.dart';
+import 'package:ride2online/src/screen/events/EventsScreen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -32,7 +32,7 @@ class SplashScreen extends StatelessWidget {
 
     return AnimatedSplashScreen(
       splash: logo,
-      nextScreen: const WelcomeScreen(),
+      nextScreen: const EventsScreen(),
       centered: true,
       backgroundColor: Colors.black,
       splashTransition: SplashTransition.slideTransition,

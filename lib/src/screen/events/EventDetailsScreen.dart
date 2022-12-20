@@ -20,36 +20,28 @@ import '../../_data.dart';
 import '../user/UserDetailsScreen.dart';
 
 class EventDetailsScreen extends StatelessWidget {
-  final Event event;
+  final int eventId;
 
-  const EventDetailsScreen({super.key, required this.event});
+  const EventDetailsScreen({super.key, required this.eventId});
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(event.title),
+        title: Text('event.title'),
       ),
       body: Center(
         child: Column(
           children: [
             Text(
-              event.title,
+              'event.title',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
-              event.organizer.username,
+              'event.organizer.username',
               style: Theme.of(context).textTheme.titleMedium,
-            ),
-            TextButton(
-              child: const Text('View organizer (Push)'),
-              onPressed: () {
-                Navigator.of(context).push<void>(
-                  MaterialPageRoute<void>(
-                    builder: (context) => UserDetailsScreen(user: event.organizer),
-                  ),
-                );
-              },
             ),
           ],
         ),

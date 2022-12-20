@@ -45,10 +45,10 @@ class App extends StatelessWidget {
       ],
       child: Builder(
         builder: (BuildContext context) {
-          final router = context.watch<AppRouter>().router;
+          final appRoute = context.watch<AppRouter>();
 
           return MaterialApp.router(
-            routerConfig: router,
+            routerConfig: appRoute.router,
             title: 'Moto events',
             theme: AppThemeLight().toThemeData(),
             darkTheme: AppThemeDark().toThemeData(),

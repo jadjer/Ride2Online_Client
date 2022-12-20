@@ -20,31 +20,33 @@ import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/widget/EventList.dart';
 
 class UserDetailsScreen extends StatelessWidget {
-  final User user;
+  final int userId;
 
   const UserDetailsScreen({
     super.key,
-    required this.user,
+    required this.userId,
   });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(user.username),
-        ),
-        body: Center(
-          // child: Column(
-          //   children: [
-          //     Expanded(
-          //       child: EventList(
-          //         events: user.books,
-          //         onTap: (book) {
-          //           RouteStateScope.of(context).go('/book/${book.id}');
-          //         },
-          //       ),
-          //     ),
-          //   ],
-          // ),
-        ),
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('user.username'),
+      ),
+      body: Center(
+        // child: Column(
+        //   children: [
+        //     Expanded(
+        //       child: EventList(
+        //         events: user.books,
+        //         onTap: (book) {
+        //           RouteStateScope.of(context).go('/book/${book.id}');
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
+      ),
+    );
+  }
 }

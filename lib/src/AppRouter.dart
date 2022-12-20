@@ -21,7 +21,6 @@ import 'package:go_router/go_router.dart';
 
 import 'AppAuth.dart';
 import 'AppRouteName.dart';
-import '_data.dart';
 import 'data/model/LoginRequest.dart';
 import 'data/model/RegisterRequest.dart';
 import 'screen/auth/ForeignPasswordScreen.dart';
@@ -45,6 +44,7 @@ class AppRouter {
   late final router = GoRouter(
     refreshListenable: appAuth,
     debugLogDiagnostics: true,
+    initialLocation: '/splash',
     routes: <GoRoute>[
       GoRoute(name: AppRouteName.root, path: '/', redirect: _redirectToEvents),
       GoRoute(name: AppRouteName.splash, path: '/splash', pageBuilder: _splashPage),
@@ -133,44 +133,15 @@ class AppRouter {
   }
 
   FadeTransitionPage _eventDetailsPage(BuildContext context, GoRouterState state) {
-    final eventId = state.params['eventId']!;
-    final selectedEvent = Event(
-      id: 1,
-      title: 'Test event',
-      subtitle: "qwe",
-      text: "zxcasdasd",
-      organizer: User(
-        id: 2,
-        phone: '+375257133519',
-        username: 'jadjer',
-        isBlocked: false,
-      ),
-    );
-    // libraryInstance.allBooks.firstWhereOrNull((Book b) => b.id.toString() == bookId);
+    final eventId = int.parse(state.params['eventId']!);
 
     return FadeTransitionPage(
       key: state.pageKey,
-      child: EventDetailsScreen(
-        event: selectedEvent,
-      ),
+      child: EventDetailsScreen(eventId: eventId),
     );
   }
 
   FadeTransitionPage _eventCreatePage(BuildContext context, GoRouterState state) {
-    final eventId = state.params['eventId']!;
-    final selectedEvent = Event(
-      id: 1,
-      title: 'Test event',
-      subtitle: "qwe",
-      text: "zxcasdasd",
-      organizer: User(
-        id: 2,
-        phone: '+375257133519',
-        username: 'jadjer',
-        isBlocked: false,
-      ),
-    );
-
     return FadeTransitionPage(
       key: state.pageKey,
       child: const EventCreateScreen(),
@@ -178,20 +149,11 @@ class AppRouter {
   }
 
   FadeTransitionPage _userDetailsPage(BuildContext context, GoRouterState state) {
-    final userId = state.params['userId']!;
-    final selectedUser = User(
-      id: 2,
-      phone: '+375257133519',
-      username: 'jadjer',
-      isBlocked: false,
-    );
-    // libraryInstance.allBooks.firstWhereOrNull((Book b) => b.id.toString() == bookId);
+    final userId = int.parse(state.params['userId']!);
 
     return FadeTransitionPage(
       key: state.pageKey,
-      child: UserDetailsScreen(
-        user: selectedUser,
-      ),
+      child: UserDetailsScreen(userId: userId),
     );
   }
 
