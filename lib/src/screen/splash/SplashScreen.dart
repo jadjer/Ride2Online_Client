@@ -14,29 +14,48 @@
  * limitations under the License.
  */
 
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:ride2online/src/screen/events/EventsScreen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
+import 'package:ride2online/src/AppRouteName.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final logo = SvgPicture.asset(
-      'assets/svg/logo_full.svg',
-      color: Colors.white,
-    );
+  State<SplashScreen> createState() {
+    return _SplashScreenState();
+  }
+}
 
-    return AnimatedSplashScreen(
-      splash: logo,
-      nextScreen: const EventsScreen(),
-      centered: true,
-      backgroundColor: Colors.black,
-      splashTransition: SplashTransition.slideTransition,
-      pageTransitionType: PageTransitionType.leftToRightWithFade,
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Center(
+        child: Lottie.asset('assets/animation/LottieLogo1.json', controller: _controller, onLoaded: (LottieComposition composition) {
+          _controller
+            ..addStatusListener((AnimationStatus status) {
+              if (status == AnimationStatus.completed) context.goNamed(AppRouteName.root);
+            })
+            ..duration = composition.duration
+            ..forward();
+        }),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

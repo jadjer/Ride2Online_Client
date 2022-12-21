@@ -18,10 +18,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
+import 'dart:developer' as developer;
 import 'AppAuth.dart';
 import 'AppRouteName.dart';
-import 'data/model/LoginRequest.dart';
 import 'data/model/RegisterRequest.dart';
 import 'screen/auth/ForeignPasswordScreen.dart';
 import 'screen/auth/LoginScreen.dart';
@@ -92,11 +91,7 @@ class AppRouter {
   FadeTransitionPage _loginPage(BuildContext context, GoRouterState state) {
     return FadeTransitionPage(
       key: state.pageKey,
-      child: LoginScreen(
-        onSignIn: (LoginRequest request) {
-          appAuth.signIn(request.username, request.password);
-        },
-      ),
+      child: const LoginScreen(),
     );
   }
 
@@ -172,10 +167,14 @@ class AppRouter {
   }
 
   FutureOr<String?> _guard(BuildContext context, GoRouterState state) {
+    final routeSubLocation = state.subloc;
+    if (routeSubLocation == '/splash') return null;
+
+    final isAuthScreen = routeSubLocation == '/auth';
     final isAuthenticated = appAuth.authenticated;
-    if (!isAuthenticated) {
-      return _redirectToWelcome(context, state);
-    }
+
+    if (!isAuthenticated && !isAuthScreen) return _redirectToWelcome(context, state);
+    if (isAuthenticated && isAuthScreen) return _redirectToEvents(context, state);
 
     return null;
   }

@@ -3,65 +3,120 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ride2online/src/data/model/LoginRequest.dart';
 
 class LoginScreen extends StatelessWidget {
-  final _isShow = true;
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  LoginScreen({super.key, required Null Function(LoginRequest request) onSignIn});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final logo = SvgPicture.asset('assets/svg/logo_full.svg');
-
-    final usernameField = TextField(
-      autofocus: true,
-      obscureText: false,
-      controller: _passwordController,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: "Username",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final passwordField = TextField(
-      obscureText: true,
-      controller: _passwordController,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: "Password",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    return Scaffold(
-      body: Center(
+    return SafeArea(
+      child: Scaffold(
+          body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            logo,
-            Text('Sign in', style: Theme.of(context).textTheme.headlineMedium),
-            usernameField,
-            passwordField,
-            TextButton(
-              onPressed: () async {
-                // await auth.signIn(_usernameController.value.text, _passwordController.value.text);
-              },
-              child: const Text('Sign in'),
+            Container(
+              height: 400,
+              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/image/background.png'), fit: BoxFit.fill)),
+              child: Stack(
+                children: <Widget>[
+                  Positioned(
+                    left: 30,
+                    width: 80,
+                    height: 200,
+                    child: Container(
+                      decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/image/light-1.png'))),
+                    ),
+                  ),
+                  Positioned(
+                    left: 140,
+                    width: 80,
+                    height: 150,
+                    child: Container(
+                      decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/image/light-2.png'))),
+                    ),
+                  ),
+                  Positioned(
+                    right: 40,
+                    top: 40,
+                    width: 80,
+                    height: 150,
+                    child: Container(
+                      decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/image/clock.png'))),
+                    ),
+                  ),
+                  Positioned(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 50),
+                      child: const Center(
+                        child: Text(
+                          "Login",
+                          style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-            Text("or", style: Theme.of(context).textTheme.headlineSmall),
-            TextButton(
-              onPressed: () async {},
-              child: const Text('Sign up'),
-            ),
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(143, 148, 251, 1),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [BoxShadow(color: Color.fromRGBO(255, 255, 255, .2), blurRadius: 20.0, offset: Offset(0, 10))]),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
+                          child: TextField(
+                            decoration: InputDecoration(border: InputBorder.none, hintText: "Username", hintStyle: TextStyle(color: Colors.grey[400])),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            decoration: InputDecoration(border: InputBorder.none, hintText: "Password", hintStyle: TextStyle(color: Colors.grey[400])),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(colors: [
+                          Color.fromRGBO(143, 148, 251, 1),
+                          Color.fromRGBO(143, 148, 251, .6),
+                        ])),
+                    child: const Center(
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
+                  const Text("Forgot Password?",
+                      style: TextStyle(
+                        color: Color.fromRGBO(143, 148, 251, 1),
+                      )),
+                ],
+              ),
+            )
           ],
         ),
-      ),
+      )),
     );
   }
 }
