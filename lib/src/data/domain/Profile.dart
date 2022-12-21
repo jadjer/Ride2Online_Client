@@ -14,6 +14,4 @@
  * limitations under the License.
  */
 
-class Profile {
-
-}
+class Profile {}

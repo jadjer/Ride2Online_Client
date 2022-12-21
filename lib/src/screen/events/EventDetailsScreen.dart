@@ -16,9 +16,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../../_data.dart';
-import '../user/UserDetailsScreen.dart';
-
 class EventDetailsScreen extends StatelessWidget {
   final int eventId;
 
@@ -26,8 +23,6 @@ class EventDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         title: Text('event.title'),

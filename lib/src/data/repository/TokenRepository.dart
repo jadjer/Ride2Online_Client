@@ -18,5 +18,6 @@ import 'package:ride2online/src/data/model/TokenResponse.dart';
 
 abstract class TokenRepository {
   Future<TokenResponse> getToken(String username, String password);
+
   Future<TokenResponse> refreshToken(String tokenAccess, String tokenRefresh);
 }

@@ -18,5 +18,6 @@ import 'package:ride2online/src/data/model/AuthResponse.dart';
 
 abstract class AuthRepository {
   Future<AuthResponse> login(String username, String password);
+
   Future<AuthResponse> register(String username, String phone, String password, int verificationCode);
 }

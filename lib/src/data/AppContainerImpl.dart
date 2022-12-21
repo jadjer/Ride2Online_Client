@@ -22,11 +22,10 @@ import 'package:ride2online/src/data/repository/impl/AuthRepositoryImpl.dart';
 import 'package:ride2online/src/data/repository/impl/EventRepositoryImpl.dart';
 
 class AppContainerImpl implements AppContainer {
-
   final _client = http.Client();
 
   @override
-  AuthRepository get authRepository =>  AuthRepositoryImpl(_client);
+  AuthRepository get authRepository => AuthRepositoryImpl(_client);
 
   @override
   EventRepository get eventRepository => EventRepositoryImpl(_client);

@@ -5,10 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:ride2online/src/widget/FadeTransitionPage.dart';
 
-import 'RideEventScaffold.dart';
-import 'events/EventsScreen.dart';
-import 'setting/SettingsScreen.dart';
-
 class RideEventScaffoldBody extends StatelessWidget {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -47,10 +43,10 @@ class RideEventScaffoldBody extends StatelessWidget {
         // route will result in a call to this build method, even though this
         // widget isn't built when those routes are active.
         // else
-          FadeTransitionPage<void>(
-            key: const ValueKey('empty'),
-            child: Container(),
-          ),
+        FadeTransitionPage<void>(
+          key: const ValueKey('empty'),
+          child: Container(),
+        ),
       ],
     );
   }

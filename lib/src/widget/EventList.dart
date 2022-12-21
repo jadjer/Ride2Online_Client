@@ -29,15 +29,15 @@ class EventList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListView.builder(
-    itemCount: events.length,
-    itemBuilder: (context, index) => ListTile(
-      title: Text(
-        events[index].title,
-      ),
-      subtitle: Text(
-        events[index].organizer.username,
-      ),
-      onTap: onTap != null ? () => onTap!(events[index]) : null,
-    ),
-  );
+        itemCount: events.length,
+        itemBuilder: (context, index) => ListTile(
+          title: Text(
+            events[index].title,
+          ),
+          subtitle: Text(
+            events[index].organizer.username,
+          ),
+          onTap: onTap != null ? () => onTap!(events[index]) : null,
+        ),
+      );
 }

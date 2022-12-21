@@ -50,14 +50,8 @@ class TokenRepositoryImpl implements TokenRepository {
   Future<TokenResponse> refreshToken(String tokenAccess, String tokenRefresh) async {
     final url = Uri.https('auth.ride2online.jadjer.by', 'token/refresh');
 
-    final headers = {
-      'content-type': 'application/json',
-      'x-api-key': 'qwe'
-    };
-    final body = {
-      'token_access': tokenAccess,
-      'token_refresh': tokenRefresh
-    };
+    final headers = {'content-type': 'application/json', 'x-api-key': 'qwe'};
+    final body = {'token_access': tokenAccess, 'token_refresh': tokenRefresh};
 
     final response = await _client.post(url, headers: headers, body: jsonEncode(body));
     final responseJson = jsonDecode(response.body);

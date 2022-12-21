@@ -16,9 +16,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:ride2online/src/_data.dart';
-import 'package:ride2online/src/widget/EventList.dart';
-
 class UserDetailsScreen extends StatelessWidget {
   final int userId;
 
@@ -34,19 +31,19 @@ class UserDetailsScreen extends StatelessWidget {
         title: Text('user.username'),
       ),
       body: Center(
-        // child: Column(
-        //   children: [
-        //     Expanded(
-        //       child: EventList(
-        //         events: user.books,
-        //         onTap: (book) {
-        //           RouteStateScope.of(context).go('/book/${book.id}');
-        //         },
-        //       ),
-        //     ),
-        //   ],
-        // ),
-      ),
+          // child: Column(
+          //   children: [
+          //     Expanded(
+          //       child: EventList(
+          //         events: user.books,
+          //         onTap: (book) {
+          //           RouteStateScope.of(context).go('/book/${book.id}');
+          //         },
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          ),
     );
   }
 }

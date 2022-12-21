@@ -172,23 +172,11 @@ class AppRouter {
   }
 
   FutureOr<String?> _guard(BuildContext context, GoRouterState state) {
-    final bool isAuthenticated = appAuth.authenticated;
-    // final bool signingIn = state.subloc == '/auth';
-    //
-    // // Go to /signin if the user is not signed in
-    // if (!isAuthenticated && !signingIn) {
-    //   return context.namedLocation(AppRouteName.welcome);
-    // }
-    // // Go to /books if the user is signed in and tries to go to /signin.
-    // else if (isAuthenticated && signingIn) {
-    //   return context.namedLocation(AppRouteName.events);
-    // }
-
+    final isAuthenticated = appAuth.authenticated;
     if (!isAuthenticated) {
       return _redirectToWelcome(context, state);
     }
 
-    // no redirect
     return null;
   }
 }
@@ -200,14 +188,15 @@ class FadeTransitionPage extends CustomTransitionPage<void> {
     required LocalKey key,
     required Widget child,
   }) : super(
-            key: key,
-            transitionsBuilder: (BuildContext context, Animation<double> animation,
-                    Animation<double> secondaryAnimation, Widget child) =>
-                FadeTransition(
-                  opacity: animation.drive(_curveTween),
-                  child: child,
-                ),
-            child: child);
+          key: key,
+          transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+            return FadeTransition(
+              opacity: animation.drive(_curveTween),
+              child: child,
+            );
+          },
+          child: child,
+        );
 
   static final CurveTween _curveTween = CurveTween(curve: Curves.easeIn);
 }

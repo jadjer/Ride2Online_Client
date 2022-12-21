@@ -15,13 +15,11 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ride2online/src/data/AppContainer.dart';
 
 import 'AppAuth.dart';
 import 'AppRouter.dart';
-import 'screen/splash/SplashScreen.dart';
 import 'theme/AppThemeDark.dart';
 import 'theme/AppThemeLight.dart';
 
