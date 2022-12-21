@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-import 'package:ride2online/src/data/model/TokenResponse.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 
-abstract class TokenRepository {
-  Future<TokenResponse> getToken(String username, String password);
+class ApiKeyInterceptor extends InterceptorContract {
+  @override
+  Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
+    final Map<String, String> headers = Map.from(request.headers);
+    headers['x-api-key'] = '';
 
-  Future<TokenResponse> refreshToken(String tokenAccess, String tokenRefresh);
+    return request.copyWith(headers: headers);
+  }
+
+  @override
+  Future<BaseResponse> interceptResponse({required BaseResponse response}) async {
+    return response;
+  }
 }

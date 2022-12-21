@@ -18,30 +18,32 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ride2online/src/data/AppContainer.dart';
 
-import 'dart:developer' as developer;
-
-import 'AppAuth.dart';
 import 'AppRouter.dart';
+import 'service/AuthService.dart';
+import 'service/EventsService.dart';
 import 'theme/AppThemeDark.dart';
 import 'theme/AppThemeLight.dart';
 
 class App extends StatelessWidget {
-  late final AppContainer _appContainer;
-  late final AppAuth _appAuth;
   late final AppRouter _appRouter;
+  late final AuthService _authService;
+  late final AppContainer _appContainer;
+  late final EventsService _eventsService;
 
   App(AppContainer appContainer, {super.key}) {
     _appContainer = appContainer;
-    _appAuth = AppAuth(_appContainer.authRepository);
-    _appRouter = AppRouter(appAuth: _appAuth);
+    _authService = AuthService(_appContainer.authRepository);
+    _appRouter = AppRouter(auth: _authService);
+    _eventsService = EventsService(_appContainer.eventsRepository);
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppAuth>.value(value: _appAuth),
+        ChangeNotifierProvider<AuthService>.value(value: _authService),
         Provider<AppRouter>.value(value: _appRouter),
+        Provider<EventsService>.value(value: _eventsService),
       ],
       child: Builder(
         builder: (BuildContext context) {

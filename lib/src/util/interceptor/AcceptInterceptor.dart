@@ -14,29 +14,19 @@
  * limitations under the License.
  */
 
-import 'package:ride2online/src/_data.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 
-class AuthResponse {
-  final bool success;
-  final String message;
-  final Auth? auth;
+class AcceptInterceptor extends InterceptorContract {
+  @override
+  Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
+    final Map<String, String> headers = Map.from(request.headers);
+    headers['accept'] = 'application/json';
 
-  AuthResponse({
-    required this.success,
-    required this.message,
-    this.auth,
-  });
+    return request.copyWith(headers: headers);
+  }
 
-  factory AuthResponse.fromJson(Map<String, dynamic> json) {
-    final success = json['success'] as bool;
-    final message = json['message'] as String;
-
-    if (!success) return AuthResponse(success: success, message: message);
-
-    return AuthResponse(
-      success: success,
-      message: message,
-      auth: Auth.fromJson(json['payload']),
-    );
+  @override
+  Future<BaseResponse> interceptResponse({required BaseResponse response}) async {
+    return response;
   }
 }

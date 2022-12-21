@@ -14,4 +14,18 @@
  * limitations under the License.
  */
 
-class EventRepository {}
+import 'package:ride2online/src/_data.dart';
+import 'package:ride2online/src/data/model/EventResponse.dart';
+import 'package:ride2online/src/data/model/EventsResponse.dart';
+
+abstract class EventsRepository {
+  Future<EventResponse> createEvent(Event request);
+
+  Future<EventsResponse> getEvents();
+
+  Future<EventResponse> getEvent(int eventId);
+
+  Future<EventResponse> updateEvent(int eventId, Event request);
+
+  Future<EventResponse> deleteEvent(int eventId);
+}

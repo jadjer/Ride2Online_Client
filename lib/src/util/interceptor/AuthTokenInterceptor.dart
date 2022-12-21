@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 
-class VerifyCodeScreen extends StatelessWidget {
-  const VerifyCodeScreen({super.key});
+class AuthTokenInterceptor extends InterceptorContract {
+  @override
+  Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
+    final Map<String, String> headers = Map.from(request.headers);
+    headers['Authorization'] = 'Bearer ';
+
+    return request.copyWith(headers: headers);
+  }
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
+  Future<BaseResponse> interceptResponse({required BaseResponse response}) async {
+    return response;
   }
 }

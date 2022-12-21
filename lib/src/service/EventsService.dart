@@ -14,29 +14,28 @@
  * limitations under the License.
  */
 
+import 'dart:async';
+
 import 'package:ride2online/src/_data.dart';
+import 'package:ride2online/src/data/repository/EventsRepository.dart';
 
-class AuthResponse {
-  final bool success;
-  final String message;
-  final Auth? auth;
+class EventsService {
+  late EventsRepository _repository;
 
-  AuthResponse({
-    required this.success,
-    required this.message,
-    this.auth,
-  });
+  EventsService(EventsRepository repository) {
+    _repository = repository;
+  }
 
-  factory AuthResponse.fromJson(Map<String, dynamic> json) {
-    final success = json['success'] as bool;
-    final message = json['message'] as String;
+  Future<List<Event>> getEvents() async {
+    return [];
+  }
 
-    if (!success) return AuthResponse(success: success, message: message);
+  FutureOr<Event?> getEventById(int eventId) async {
+    final result = await _repository.getEvent(eventId);
+    if (result.success) {
+      return result.event;
+    }
 
-    return AuthResponse(
-      success: success,
-      message: message,
-      auth: Auth.fromJson(json['payload']),
-    );
+    return null;
   }
 }

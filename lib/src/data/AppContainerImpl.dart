@@ -14,19 +14,36 @@
  * limitations under the License.
  */
 
-import 'package:http/http.dart' as http;
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:ride2online/src/data/AppContainer.dart';
 import 'package:ride2online/src/data/repository/AuthRepository.dart';
-import 'package:ride2online/src/data/repository/EventRepository.dart';
+import 'package:ride2online/src/data/repository/EventsRepository.dart';
 import 'package:ride2online/src/data/repository/impl/AuthRepositoryImpl.dart';
-import 'package:ride2online/src/data/repository/impl/EventRepositoryImpl.dart';
+import 'package:ride2online/src/data/repository/impl/EventsRepositoryImpl.dart';
+import 'package:ride2online/src/util/ExpiredTokenRetryPolicy.dart';
+import 'package:ride2online/src/util/interceptor/AcceptInterceptor.dart';
+import 'package:ride2online/src/util/interceptor/ApiKeyInterceptor.dart';
+import 'package:ride2online/src/util/interceptor/AuthTokenInterceptor.dart';
+import 'package:ride2online/src/util/interceptor/ContentTypeInterceptor.dart';
 
 class AppContainerImpl implements AppContainer {
-  final _client = http.Client();
+  late Client _client;
+
+  AppContainerImpl() {
+    _client = InterceptedClient.build(
+      interceptors: [
+        AcceptInterceptor(),
+        ContentTypeInterceptor(),
+        ApiKeyInterceptor(),
+        AuthTokenInterceptor(),
+      ],
+      retryPolicy: ExpiredTokenRetryPolicy(),
+    );
+  }
 
   @override
   AuthRepository get authRepository => AuthRepositoryImpl(_client);
 
   @override
-  EventRepository get eventRepository => EventRepositoryImpl(_client);
+  EventsRepository get eventsRepository => EventsRepositoryImpl(_client);
 }

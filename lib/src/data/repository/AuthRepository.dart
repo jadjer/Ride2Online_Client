@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
+import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/data/model/AuthResponse.dart';
+import 'package:ride2online/src/data/model/LoginRequest.dart';
+import 'package:ride2online/src/data/model/RegisterRequest.dart';
+import 'package:ride2online/src/data/model/TokenResponse.dart';
 
 abstract class AuthRepository {
-  Future<AuthResponse> login(String username, String password);
+  Future<AuthResponse> login(LoginRequest request);
 
-  Future<AuthResponse> register(String username, String phone, String password, int verificationCode);
+  Future<AuthResponse> register(RegisterRequest request);
+
+  Future<TokenResponse> getToken(LoginRequest request);
+
+  Future<TokenResponse> refreshToken(Token request);
 }

@@ -16,54 +16,60 @@
 
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/data/model/AuthResponse.dart';
+import 'package:ride2online/src/data/model/LoginRequest.dart';
+import 'package:ride2online/src/data/model/RegisterRequest.dart';
+import 'package:ride2online/src/data/model/TokenResponse.dart';
 import 'package:ride2online/src/data/repository/AuthRepository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  late final http.Client _client;
+  final _baseUrl = 'auth.ride2online.jadjer.by';
 
-  AuthRepositoryImpl(http.Client client) {
+  late Client _client;
+
+  AuthRepositoryImpl(Client client) {
     _client = client;
   }
 
   @override
-  Future<AuthResponse> login(String username, String password) async {
-    final url = Uri.https('auth.ride2online.jadjer.by', 'login');
+  Future<AuthResponse> login(LoginRequest request) async {
+    final url = Uri.https(_baseUrl, 'login');
 
-    final headers = {
-      'content-type': 'application/json',
-      'x-api-key': 'qwe',
-    };
-    final body = {
-      'username': username,
-      'password': password,
-    };
-
-    final response = await _client.post(url, headers: headers, body: jsonEncode(body));
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
     final responseJson = jsonDecode(response.body);
 
     return AuthResponse.fromJson(responseJson);
   }
 
   @override
-  Future<AuthResponse> register(String username, String phone, String password, int verificationCode) async {
-    final url = Uri.https('auth.ride2online.jadjer.by', 'register');
+  Future<AuthResponse> register(RegisterRequest request) async {
+    final url = Uri.https(_baseUrl, 'register');
 
-    final headers = {
-      'content-type': 'application/json',
-      'x-api-key': 'qwe',
-    };
-    final body = {
-      'username': username,
-      'phone': phone,
-      'password': password,
-      'verification_code': verificationCode,
-    };
-
-    final response = await _client.post(url, headers: headers, body: jsonEncode(body));
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
     final responseJson = jsonDecode(response.body);
 
     return AuthResponse.fromJson(responseJson);
+  }
+
+  @override
+  Future<TokenResponse> getToken(LoginRequest request) async {
+    final url = Uri.https(_baseUrl, 'token/get');
+
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
+    final responseJson = jsonDecode(response.body);
+
+    return TokenResponse.fromJson(responseJson);
+  }
+
+  @override
+  Future<TokenResponse> refreshToken(Token request) async {
+    final url = Uri.https(_baseUrl, 'token/refresh');
+
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
+    final responseJson = jsonDecode(response.body);
+
+    return TokenResponse.fromJson(responseJson);
   }
 }

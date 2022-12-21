@@ -19,12 +19,12 @@ import 'package:ride2online/src/_data.dart';
 class TokenResponse {
   final bool success;
   final String message;
-  final Token? payload;
+  final Token? token;
 
   TokenResponse({
     required this.success,
     required this.message,
-    this.payload,
+    this.token,
   });
 
   factory TokenResponse.fromJson(Map<String, dynamic> json) {
@@ -36,7 +36,7 @@ class TokenResponse {
     return TokenResponse(
       success: success,
       message: message,
-      payload: Token.fromJson(json['payload']),
+      token: Token.fromJson(json['payload']),
     );
   }
 }

@@ -16,14 +16,16 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ride2online/src/data/model/LoginRequest.dart';
+import 'package:ride2online/src/data/model/RegisterRequest.dart';
 import 'package:ride2online/src/data/repository/AuthRepository.dart';
 
-class AppAuth extends ChangeNotifier {
+class AuthService extends ChangeNotifier {
   late bool _authenticated;
   late AuthRepository _repository;
   late FlutterSecureStorage _storage;
 
-  AppAuth(AuthRepository repository) {
+  AuthService(AuthRepository repository) {
     _authenticated = false;
     _repository = repository;
     _storage = const FlutterSecureStorage();
@@ -32,10 +34,11 @@ class AppAuth extends ChangeNotifier {
   bool get authenticated => _authenticated;
 
   Future<void> signIn(String username, String password) async {
-    var result = await _repository.login(username, password);
+    final loginRequest = LoginRequest(username: username, password: password);
+    final result = await _repository.login(loginRequest);
     if (result.success) {
-      await _storage.write(key: 'token_access', value: result.payload!.token.tokenAccess);
-      await _storage.write(key: 'token_refresh', value: result.payload!.token.tokenRefresh);
+      await _storage.write(key: 'token_access', value: result.auth!.token.tokenAccess);
+      await _storage.write(key: 'token_refresh', value: result.auth!.token.tokenRefresh);
 
       _authenticated = true;
     }
@@ -43,11 +46,12 @@ class AppAuth extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signUp(String phone, String username, String password, int code) async {
-    var result = await _repository.register(username, phone, password, code);
+  Future<void> signUp(String phone, String username, String password, int verifyCode) async {
+    final registerRequest = RegisterRequest(phone: phone, username: username, password: password, verifyCode: verifyCode);
+    final result = await _repository.register(registerRequest);
     if (result.success) {
-      await _storage.write(key: 'token_access', value: result.payload!.token.tokenAccess);
-      await _storage.write(key: 'token_refresh', value: result.payload!.token.tokenRefresh);
+      await _storage.write(key: 'token_access', value: result.auth!.token.tokenAccess);
+      await _storage.write(key: 'token_refresh', value: result.auth!.token.tokenRefresh);
 
       _authenticated = true;
     }
@@ -60,6 +64,7 @@ class AppAuth extends ChangeNotifier {
     await _storage.delete(key: 'token_refresh');
 
     _authenticated = false;
+
     notifyListeners();
   }
 }

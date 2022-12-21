@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ride2online/src/App.dart';
-import 'package:ride2online/src/AppAuth.dart';
+import 'package:ride2online/src/service/AuthService.dart';
 import 'package:ride2online/src/data/AppContainerImpl.dart';
 
 void main() {

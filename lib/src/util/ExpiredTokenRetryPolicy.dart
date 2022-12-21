@@ -14,29 +14,25 @@
  * limitations under the License.
  */
 
-import 'package:ride2online/src/_data.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 
-class AuthResponse {
-  final bool success;
-  final String message;
-  final Auth? auth;
+class ExpiredTokenRetryPolicy extends RetryPolicy {
+  @override
+  int get maxRetryAttempts => 3;
 
-  AuthResponse({
-    required this.success,
-    required this.message,
-    this.auth,
-  });
+  @override
+  Future<bool> shouldAttemptRetryOnException(Exception reason, BaseRequest request) async {
+    return false;
+  }
 
-  factory AuthResponse.fromJson(Map<String, dynamic> json) {
-    final success = json['success'] as bool;
-    final message = json['message'] as String;
+  @override
+  Future<bool> shouldAttemptRetryOnResponse(BaseResponse response) async {
+    if (response.statusCode == 401) {
+      // Perform your token refresh here.
 
-    if (!success) return AuthResponse(success: success, message: message);
+      return true;
+    }
 
-    return AuthResponse(
-      success: success,
-      message: message,
-      auth: Auth.fromJson(json['payload']),
-    );
+    return false;
   }
 }

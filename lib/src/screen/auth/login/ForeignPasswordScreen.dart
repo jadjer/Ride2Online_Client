@@ -15,11 +15,24 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ride2online/src/AppRouteName.dart';
 
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+class ForeignPasswordScreen extends StatefulWidget {
+  const ForeignPasswordScreen({super.key});
+
+  @override
+  State<ForeignPasswordScreen> createState() {
+    return _ForeignPasswordScreenState();
+  }
+}
+
+class _ForeignPasswordScreenState extends State<ForeignPasswordScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(top: 50),
                         child: const Center(
-                          child: Text('Welcome', style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold)),
+                          child: Text('Foreign password', style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold)),
                         ),
                       ),
                     )
@@ -78,25 +91,28 @@ class WelcomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(30.0),
                 child: Column(
                   children: <Widget>[
-                    InkWell(
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(143, 148, 251, 1),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: const [
+                          BoxShadow(color: Color.fromRGBO(255, 255, 255, .2), blurRadius: 20.0, offset: Offset(0, 10)),
+                        ],
+                      ),
                       child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: const LinearGradient(colors: [
-                              Color.fromRGBO(143, 148, 251, 1),
-                              Color.fromRGBO(143, 148, 251, .6),
-                            ])),
-                        child: const Center(
-                          child: Text("Login", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none, hintText: '(12) 345-67-89', hintStyle: TextStyle(color: Colors.grey[400])),
+                          autofocus: true,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            PhoneInputFormatter(allowEndlessPhone: false, defaultCountryCode: 'BY'),
+                          ],
                         ),
                       ),
-                      onTap: () {
-                        context.goNamed(AppRouteName.login);
-                      },
                     ),
                     const SizedBox(height: 30),
-                    // const Spacer(),
                     InkWell(
                       child: Container(
                         height: 50,
@@ -107,11 +123,11 @@ class WelcomeScreen extends StatelessWidget {
                               Color.fromRGBO(143, 148, 251, .6),
                             ])),
                         child: const Center(
-                          child: Text("Register", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                          child: Text("Reset", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                         ),
                       ),
                       onTap: () {
-                        context.goNamed(AppRouteName.register);
+                        context.goNamed(AppRouteName.loginVerifyCode);
                       },
                     ),
                   ],

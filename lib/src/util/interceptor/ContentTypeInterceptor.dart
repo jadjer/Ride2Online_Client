@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-import 'package:http/http.dart' as http;
-import 'package:ride2online/src/data/repository/EventRepository.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 
-class EventRepositoryImpl implements EventRepository {
-  final String basePath = 'https://auth.ride2online.jadjer.by';
+class ContentTypeInterceptor extends InterceptorContract {
+  @override
+  Future<BaseRequest> interceptRequest({required BaseRequest request}) async {
+    final Map<String, String> headers = Map.from(request.headers);
+    headers['content-type'] = 'application/json';
 
-  late final http.Client _client;
+    return request.copyWith(headers: headers);
+  }
 
-  EventRepositoryImpl(http.Client client) {
-    _client = client;
+  @override
+  Future<BaseResponse> interceptResponse({required BaseResponse response}) async {
+    return response;
   }
 }

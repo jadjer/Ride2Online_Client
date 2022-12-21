@@ -14,13 +14,29 @@
  * limitations under the License.
  */
 
-import 'package:flutter/material.dart';
+import 'package:ride2online/src/_data.dart';
 
-class ForeignPasswordScreen extends StatelessWidget {
-  const ForeignPasswordScreen({super.key});
+class EventsResponse {
+  final bool success;
+  final String message;
+  final List<Event>? events;
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
+  EventsResponse({
+    required this.success,
+    required this.message,
+    this.events,
+  });
+
+  factory EventsResponse.fromJson(Map<String, dynamic> json) {
+    final success = json['success'] as bool;
+    final message = json['message'] as String;
+
+    if (!success) return EventsResponse(success: success, message: message);
+
+    return EventsResponse(
+      success: success,
+      message: message,
+      events: null,
+    );
   }
 }

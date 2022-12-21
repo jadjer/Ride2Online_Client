@@ -16,27 +16,27 @@
 
 import 'package:ride2online/src/_data.dart';
 
-class AuthResponse {
+class EventResponse {
   final bool success;
   final String message;
-  final Auth? auth;
+  final Event? event;
 
-  AuthResponse({
+  EventResponse({
     required this.success,
     required this.message,
-    this.auth,
+    this.event,
   });
 
-  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+  factory EventResponse.fromJson(Map<String, dynamic> json) {
     final success = json['success'] as bool;
     final message = json['message'] as String;
 
-    if (!success) return AuthResponse(success: success, message: message);
+    if (!success) return EventResponse(success: success, message: message);
 
-    return AuthResponse(
+    return EventResponse(
       success: success,
       message: message,
-      auth: Auth.fromJson(json['payload']),
+      event: Event.fromJson(json['payload']),
     );
   }
 }
