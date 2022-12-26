@@ -14,12 +14,22 @@
  * limitations under the License.
  */
 
-export 'data/domain/Auth.dart';
-export 'data/domain/Event.dart';
-export 'data/domain/Location.dart';
-export 'data/domain/Phone.dart';
-export 'data/domain/PhoneToken.dart';
-export 'data/domain/Profile.dart';
-export 'data/domain/Token.dart';
-export 'data/domain/User.dart';
-export 'data/domain/Username.dart';
+class Username {
+  final String username;
+
+  Username({
+    required this.username,
+  });
+
+  factory Username.fromJson(Map<String, dynamic> json) {
+    return Username(
+      username: json['username'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'username': username,
+    };
+  }
+}

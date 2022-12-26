@@ -14,56 +14,79 @@
  * limitations under the License.
  */
 
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/data/model/LoginRequest.dart';
-import 'package:ride2online/src/data/model/RegisterRequest.dart';
 import 'package:ride2online/src/data/repository/AuthRepository.dart';
 
 class AuthService extends ChangeNotifier {
-  late bool _authenticated;
   late AuthRepository _repository;
   late FlutterSecureStorage _storage;
+  late String? _errorMessage;
+  late bool _isAuthenticated;
 
   AuthService(AuthRepository repository) {
-    _authenticated = false;
+    _storage = const FlutterSecureStorage(
+      iOptions: IOSOptions(accountName: 'by.jadjer.ride2online'),
+      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    );
     _repository = repository;
-    _storage = const FlutterSecureStorage();
+    _errorMessage = null;
+    _isAuthenticated = false;
+
+    init();
   }
 
-  bool get authenticated => _authenticated;
+  Future<void> init() async {
+    String? tokenAccess = await _storage.read(key: 'token_access');
+    if (tokenAccess != null) {
+      _isAuthenticated = true;
+    }
+  }
+
+  bool get isAuthenticated => _isAuthenticated;
+  String? get errorMessage => _errorMessage;
+
+  Future<bool> existUsername(String username) async {
+    log('Check if username $username is exists');
+
+    final usernameRequest = Username(username: username);
+    final result = await _repository.existUsername(usernameRequest);
+    if (result.success) {
+      return true;
+    }
+
+    return false;
+  }
 
   Future<void> signIn(String username, String password) async {
+    log('Try login');
+
     final loginRequest = LoginRequest(username: username, password: password);
     final result = await _repository.login(loginRequest);
     if (result.success) {
+      log('Login success');
+
       await _storage.write(key: 'token_access', value: result.auth!.token.tokenAccess);
       await _storage.write(key: 'token_refresh', value: result.auth!.token.tokenRefresh);
+    } else {
+      log('Login failed');
 
-      _authenticated = true;
-    }
-
-    notifyListeners();
-  }
-
-  Future<void> signUp(String phone, String username, String password, int verifyCode) async {
-    final registerRequest = RegisterRequest(phone: phone, username: username, password: password, verifyCode: verifyCode);
-    final result = await _repository.register(registerRequest);
-    if (result.success) {
-      await _storage.write(key: 'token_access', value: result.auth!.token.tokenAccess);
-      await _storage.write(key: 'token_refresh', value: result.auth!.token.tokenRefresh);
-
-      _authenticated = true;
+      _errorMessage = result.message;
+      log(_errorMessage!);
     }
 
     notifyListeners();
   }
 
   Future<void> signOut() async {
+    log('Try logout');
+
     await _storage.delete(key: 'token_access');
     await _storage.delete(key: 'token_refresh');
-
-    _authenticated = false;
 
     notifyListeners();
   }

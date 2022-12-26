@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:ride2online/src/_data.dart';
-import 'package:ride2online/src/data/repository/EventsRepository.dart';
 
-class EventsService extends ChangeNotifier {
-  late EventsRepository _repository;
+class PhoneTokenResponse {
+  final bool success;
+  final String message;
+  final PhoneToken? token;
 
-  EventsService(EventsRepository repository) {
-    _repository = repository;
-  }
+  PhoneTokenResponse({
+    required this.success,
+    required this.message,
+    this.token,
+  });
 
-  Future<List<Event>> getEvents() async {
-    return [];
-  }
+  factory PhoneTokenResponse.fromJson(Map<String, dynamic> json) {
+    final success = json['success'] as bool;
+    final message = json['message'] as String;
 
-  FutureOr<Event?> getEventById(int eventId) async {
-    final result = await _repository.getEvent(eventId);
-    if (result.success) {
-      return result.event;
-    }
+    if (!success) return PhoneTokenResponse(success: success, message: message);
 
-    return null;
+    return PhoneTokenResponse(
+      success: success,
+      message: message,
+      token: PhoneToken.fromJson(json['payload']),
+    );
   }
 }

@@ -15,11 +15,16 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:ride2online/src/AppRouteName.dart';
 
-class LoginVerifyCodeScreen extends StatelessWidget {
-  const LoginVerifyCodeScreen({super.key});
+class AuthScaffold extends StatelessWidget {
+  final String title;
+  final List<Widget> widgets;
+
+  const AuthScaffold({
+    super.key,
+    required this.title,
+    required this.widgets,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +71,8 @@ class LoginVerifyCodeScreen extends StatelessWidget {
                     Positioned(
                       child: Container(
                         margin: const EdgeInsets.only(top: 50),
-                        child: const Center(
-                          child: Text('Phone verification', style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold)),
+                        child: Center(
+                          child: Text(title, style: const TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold)),
                         ),
                       ),
                     )
@@ -77,45 +82,7 @@ class LoginVerifyCodeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: const Color.fromRGBO(143, 148, 251, 1),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(color: Color.fromRGBO(255, 255, 255, .2), blurRadius: 20.0, offset: Offset(0, 10)),
-                        ],
-                      ),
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          maxLength: 6,
-                          decoration: InputDecoration(border: InputBorder.none, hintText: 'Verify code', hintStyle: TextStyle(color: Colors.grey[400])),
-                          autofocus: true,
-                          keyboardType: TextInputType.number,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    InkWell(
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: const LinearGradient(colors: [
-                              Color.fromRGBO(143, 148, 251, 1),
-                              Color.fromRGBO(143, 148, 251, .6),
-                            ])),
-                        child: const Center(
-                          child: Text("Reset", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                      onTap: () {
-                        context.goNamed(AppRouteName.changePassword);
-                      },
-                    ),
-                  ],
+                  children: widgets,
                 ),
               )
             ],

@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/data/model/AuthResponse.dart';
+import 'package:ride2online/src/data/model/ChangePasswordRequest.dart';
+import 'package:ride2online/src/data/model/ChangePasswordResponse.dart';
+import 'package:ride2online/src/data/model/ExistResponse.dart';
 import 'package:ride2online/src/data/model/LoginRequest.dart';
+import 'package:ride2online/src/data/model/PhoneTokenResponse.dart';
 import 'package:ride2online/src/data/model/RegisterRequest.dart';
 import 'package:ride2online/src/data/model/TokenResponse.dart';
 import 'package:ride2online/src/data/repository/AuthRepository.dart';
@@ -31,6 +36,16 @@ class AuthRepositoryImpl implements AuthRepository {
 
   AuthRepositoryImpl(Client client) {
     _client = client;
+  }
+
+  @override
+  Future<PhoneTokenResponse> getVerificationCode(Phone request) async {
+    final url = Uri.https(_baseUrl, 'get_verification_code');
+
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
+    final responseJson = jsonDecode(response.body);
+
+    return PhoneTokenResponse.fromJson(responseJson);
   }
 
   @override
@@ -71,5 +86,35 @@ class AuthRepositoryImpl implements AuthRepository {
     final responseJson = jsonDecode(response.body);
 
     return TokenResponse.fromJson(responseJson);
+  }
+
+  @override
+  Future<ExistResponse> existPhone(Phone request) async {
+    final url = Uri.https(_baseUrl, 'exist/phone');
+
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
+    final responseJson = jsonDecode(response.body);
+
+    return ExistResponse.fromJson(responseJson);
+  }
+
+  @override
+  Future<ExistResponse> existUsername(Username request) async {
+    final url = Uri.https(_baseUrl, 'exist/username');
+
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
+    final responseJson = jsonDecode(response.body);
+
+    return ExistResponse.fromJson(responseJson);
+  }
+
+  @override
+  Future<ChangePasswordResponse> changePassword(ChangePasswordRequest request) async {
+    final url = Uri.https(_baseUrl, 'change_password');
+
+    final response = await _client.post(url, body: jsonEncode(request.toJson()));
+    final responseJson = jsonDecode(response.body);
+
+    return ChangePasswordResponse.fromJson(responseJson);
   }
 }

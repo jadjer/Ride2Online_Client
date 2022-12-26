@@ -15,19 +15,19 @@
  */
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ride2online/src/screen/auth/change_password/ChangePasswordPhoneScreen.dart';
+import 'package:ride2online/src/screen/auth/register/RegisterPhoneScreen.dart';
 import 'package:ride2online/src/util/FadeTransitionPage.dart';
 
 import 'AppRouteName.dart';
 import 'screen/auth/WelcomeScreen.dart';
-import 'screen/auth/login/ChangePasswordScreen.dart';
-import 'screen/auth/login/ForeignPasswordScreen.dart';
+import 'screen/auth/change_password/ChangePasswordScreen.dart';
 import 'screen/auth/login/LoginScreen.dart';
-import 'screen/auth/login/LoginVerifyCodeScreen.dart';
 import 'screen/auth/register/RegisterScreen.dart';
-import 'screen/auth/register/RegisterVerifyCodeScreen.dart';
 import 'screen/error/ErrorPage.dart';
 import 'screen/events/EventCreateScreen.dart';
 import 'screen/events/EventDetailsScreen.dart';
@@ -51,13 +51,11 @@ class AppRouter {
       GoRoute(name: AppRouteName.splash, path: '/splash', pageBuilder: _splashPage),
       GoRoute(name: AppRouteName.welcome, path: '/auth', pageBuilder: _welcomePage, routes: [
         GoRoute(name: AppRouteName.login, path: 'login', pageBuilder: _loginPage, routes: [
-          GoRoute(name: AppRouteName.foreignPassword, path: 'foreign-password', pageBuilder: _foreignPasswordPage),
-          GoRoute(name: AppRouteName.loginVerifyCode, path: 'login-verify-code', pageBuilder: _loginVerifyCodePage),
+          GoRoute(name: AppRouteName.changePasswordPhone, path: 'change-password-phone', pageBuilder: _changePasswordPhonePage),
           GoRoute(name: AppRouteName.changePassword, path: 'change-password', pageBuilder: _changePasswordPage),
         ]),
-        GoRoute(name: AppRouteName.register, path: 'register', pageBuilder: _registerPage, routes: [
-          GoRoute(name: AppRouteName.registerVerifyCode, path: 'register-verify-code', pageBuilder: _registerVerifyCodePage),
-        ]),
+        GoRoute(name: AppRouteName.registerPhone, path: 'register-phone', pageBuilder: _registerPhonePage),
+        GoRoute(name: AppRouteName.register, path: 'register', pageBuilder: _registerPage),
       ]),
       GoRoute(name: AppRouteName.events, path: '/events', pageBuilder: _eventsPage, routes: [
         GoRoute(name: AppRouteName.eventDetail, path: ':eventId', pageBuilder: _eventDetailsPage, routes: [
@@ -96,24 +94,20 @@ class AppRouter {
     return FadeTransitionPage(key: state.pageKey, child: const LoginScreen());
   }
 
-  FadeTransitionPage _foreignPasswordPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const ForeignPasswordScreen());
+  FadeTransitionPage _changePasswordPhonePage(BuildContext context, GoRouterState state) {
+    return FadeTransitionPage(key: state.pageKey, child: const ChangePasswordPhoneScreen());
   }
 
   FadeTransitionPage _changePasswordPage(BuildContext context, GoRouterState state) {
     return FadeTransitionPage(key: state.pageKey, child: const ChangePasswordScreen());
   }
 
-  FadeTransitionPage _loginVerifyCodePage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const LoginVerifyCodeScreen());
+  FadeTransitionPage _registerPhonePage(BuildContext context, GoRouterState state) {
+    return FadeTransitionPage(key: state.pageKey, child: const RegisterPhoneScreen());
   }
 
   FadeTransitionPage _registerPage(BuildContext context, GoRouterState state) {
     return FadeTransitionPage(key: state.pageKey, child: const RegisterScreen());
-  }
-
-  FadeTransitionPage _registerVerifyCodePage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const RegisterVerifyCodeScreen());
   }
 
   FadeTransitionPage _eventsPage(BuildContext context, GoRouterState state) {
@@ -146,10 +140,11 @@ class AppRouter {
 
   FutureOr<String?> _guard(BuildContext context, GoRouterState state) {
     final routeSubLocation = state.subloc;
-    final isAuthScreen = routeSubLocation.contains(_redirectToWelcome(context, state));
-    final isAuthenticated = auth.authenticated;
-
     if (routeSubLocation == _redirectToSplash()) return null;
+
+    final isAuthScreen = routeSubLocation.contains(_redirectToWelcome(context, state));
+    final isAuthenticated = auth.isAuthenticated;
+
     if (!isAuthenticated && !isAuthScreen) return _redirectToWelcome(context, state);
     if (isAuthenticated && isAuthScreen) return _redirectToEvents(context, state);
 

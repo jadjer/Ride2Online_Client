@@ -17,10 +17,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ride2online/src/data/AppContainer.dart';
+import 'package:ride2online/src/service/ChangePasswordService.dart';
 
 import 'AppRouter.dart';
 import 'service/AuthService.dart';
 import 'service/EventsService.dart';
+import 'service/RegisterService.dart';
 import 'theme/AppThemeDark.dart';
 import 'theme/AppThemeLight.dart';
 
@@ -29,12 +31,18 @@ class App extends StatelessWidget {
   late final AuthService _authService;
   late final AppContainer _appContainer;
   late final EventsService _eventsService;
+  late final RegisterService _registerService;
+  late final ChangePasswordService _changePasswordService;
 
   App(AppContainer appContainer, {super.key}) {
     _appContainer = appContainer;
+
     _authService = AuthService(_appContainer.authRepository);
-    _appRouter = AppRouter(auth: _authService);
     _eventsService = EventsService(_appContainer.eventsRepository);
+    _registerService = RegisterService(_appContainer.authRepository);
+    _changePasswordService = ChangePasswordService(_appContainer.authRepository);
+
+    _appRouter = AppRouter(auth: _authService);
   }
 
   @override
@@ -42,8 +50,10 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<AuthService>.value(value: _authService),
+        ChangeNotifierProvider<RegisterService>.value(value: _registerService),
+        ChangeNotifierProvider<ChangePasswordService>.value(value: _changePasswordService),
+        ChangeNotifierProvider<EventsService>.value(value: _eventsService),
         Provider<AppRouter>.value(value: _appRouter),
-        Provider<EventsService>.value(value: _eventsService),
       ],
       child: Builder(
         builder: (BuildContext context) {

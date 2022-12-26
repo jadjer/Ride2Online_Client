@@ -14,12 +14,22 @@
  * limitations under the License.
  */
 
-export 'data/domain/Auth.dart';
-export 'data/domain/Event.dart';
-export 'data/domain/Location.dart';
-export 'data/domain/Phone.dart';
-export 'data/domain/PhoneToken.dart';
-export 'data/domain/Profile.dart';
-export 'data/domain/Token.dart';
-export 'data/domain/User.dart';
-export 'data/domain/Username.dart';
+class ExistResponse {
+  final bool success;
+  final String message;
+
+  ExistResponse({
+    required this.success,
+    required this.message,
+  });
+
+  factory ExistResponse.fromJson(Map<String, dynamic> json) {
+    final success = json['success'] as bool;
+    final message = json['message'] as String;
+
+    return ExistResponse(
+        success: success,
+        message: message
+    );
+  }
+}

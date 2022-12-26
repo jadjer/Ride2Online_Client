@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-export 'data/domain/Auth.dart';
-export 'data/domain/Event.dart';
-export 'data/domain/Location.dart';
-export 'data/domain/Phone.dart';
-export 'data/domain/PhoneToken.dart';
-export 'data/domain/Profile.dart';
-export 'data/domain/Token.dart';
-export 'data/domain/User.dart';
-export 'data/domain/Username.dart';
+class ChangePasswordRequest {
+  final String phone;
+  final String password;
+  final int verificationCode;
+  final String phoneToken;
+
+  ChangePasswordRequest({required this.phone, required this.password, required this.verificationCode, required this.phoneToken});
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'phone': phone,
+      'password': password,
+      'verification_code': verificationCode,
+      'phone_token': phoneToken,
+    };
+  }
+}

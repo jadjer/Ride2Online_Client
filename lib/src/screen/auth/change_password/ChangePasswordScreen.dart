@@ -18,35 +18,34 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:ride2online/src/AppRouteName.dart';
-import 'package:ride2online/src/service/RegisterService.dart';
+import 'package:ride2online/src/service/ChangePasswordService.dart';
 import 'package:ride2online/src/widget/AuthScaffold.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() {
-    return _RegisterScreenState();
+  State<ChangePasswordScreen> createState() {
+    return _ChangePasswordScreenState();
   }
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final _usernameTextController = TextEditingController();
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _passwordTextController = TextEditingController();
   final _verificationCodeTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final register = context.watch<RegisterService>();
+    final changePassword = context.watch<ChangePasswordService>();
 
-    if (register.isRegistered) {
+    if (changePassword.isChanged) {
       Future.microtask(() {
         context.goNamed(AppRouteName.login);
       });
     }
 
     return AuthScaffold(
-      title: 'Register',
+      title: 'Change password',
       widgets: [
         Container(
           padding: const EdgeInsets.all(5),
@@ -63,17 +62,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.all(8.0),
                 decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
                 child: TextField(
-                  decoration: InputDecoration(border: InputBorder.none, hintText: 'Username', hintStyle: TextStyle(color: Colors.grey[400])),
-                  autofocus: true,
-                  keyboardType: TextInputType.name,
-                  controller: _usernameTextController,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey))),
-                child: TextField(
                   decoration: InputDecoration(border: InputBorder.none, hintText: 'Password', hintStyle: TextStyle(color: Colors.grey[400])),
+                  autofocus: true,
                   keyboardType: TextInputType.visiblePassword,
                   controller: _passwordTextController,
                 ),
@@ -83,14 +73,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: TextField(
                   maxLength: 6,
                   decoration: InputDecoration(border: InputBorder.none, hintText: 'Verify code', hintStyle: TextStyle(color: Colors.grey[400])),
+                  autofocus: true,
                   keyboardType: TextInputType.number,
                   controller: _verificationCodeTextController,
-                ),
-              ),
-              Visibility(
-                visible: (register.errorMessage != null),
-                child: Center(
-                  child: Text(register.errorMessage ?? '', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -107,27 +92,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Color.fromRGBO(143, 148, 251, .6),
                 ])),
             child: const Center(
-              child: Text("Register", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              child: Text("Change", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             ),
           ),
           onTap: () async {
-            final username = _usernameTextController.text;
             final password = _passwordTextController.text;
             final verificationCode = int.parse(_verificationCodeTextController.text);
 
-            await register.signUp(username, password, verificationCode);
+            await changePassword.changePassword(password, verificationCode);
           },
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    _usernameTextController.dispose();
-    _passwordTextController.dispose();
-    _verificationCodeTextController.dispose();
-
-    super.dispose();
   }
 }

@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
+import 'dart:async';
+
 import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/data/model/AuthResponse.dart';
+import 'package:ride2online/src/data/model/ChangePasswordRequest.dart';
+import 'package:ride2online/src/data/model/ChangePasswordResponse.dart';
+import 'package:ride2online/src/data/model/ExistResponse.dart';
 import 'package:ride2online/src/data/model/LoginRequest.dart';
+import 'package:ride2online/src/data/model/PhoneTokenResponse.dart';
 import 'package:ride2online/src/data/model/RegisterRequest.dart';
 import 'package:ride2online/src/data/model/TokenResponse.dart';
 
 abstract class AuthRepository {
+  Future<PhoneTokenResponse> getVerificationCode(Phone request);
+
   Future<AuthResponse> login(LoginRequest request);
 
   Future<AuthResponse> register(RegisterRequest request);
@@ -28,4 +36,10 @@ abstract class AuthRepository {
   Future<TokenResponse> getToken(LoginRequest request);
 
   Future<TokenResponse> refreshToken(Token request);
+
+  Future<ExistResponse> existPhone(Phone phone);
+
+  Future<ExistResponse> existUsername(Username username);
+
+  Future<ChangePasswordResponse> changePassword(ChangePasswordRequest request);
 }

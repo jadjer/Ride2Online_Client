@@ -19,11 +19,10 @@ class AppRouteName {
   static const String splash = 'splash';
   static const String welcome = 'auth-welcome';
   static const String login = 'login';
+  static const String registerPhone = 'register-phone';
   static const String register = 'register';
-  static const String foreignPassword = 'foreign-password';
+  static const String changePasswordPhone = 'change-password-phone';
   static const String changePassword = 'change-password';
-  static const String loginVerifyCode = 'login-verify-code';
-  static const String registerVerifyCode = 'register-verify-code';
   static const String events = 'events';
   static const String eventDetail = 'event-detail';
   static const String eventCreate = 'event-create';
