@@ -27,9 +27,6 @@ class ExistResponse {
     final success = json['success'] as bool;
     final message = json['message'] as String;
 
-    return ExistResponse(
-        success: success,
-        message: message
-    );
+    return ExistResponse(success: success, message: message);
   }
 }

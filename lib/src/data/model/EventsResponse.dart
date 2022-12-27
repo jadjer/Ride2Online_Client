@@ -14,29 +14,37 @@
  * limitations under the License.
  */
 
+import 'dart:developer';
+
 import 'package:ride2online/src/_data.dart';
 
 class EventsResponse {
   final bool success;
   final String message;
-  final List<Event>? events;
+  final List<Event> events;
 
   EventsResponse({
     required this.success,
     required this.message,
-    this.events,
+    required this.events,
   });
 
   factory EventsResponse.fromJson(Map<String, dynamic> json) {
     final success = json['success'] as bool;
     final message = json['message'] as String;
 
-    if (!success) return EventsResponse(success: success, message: message);
+    if (!success) return EventsResponse(success: success, message: message, events: []);
+
+    final payload = json['payload'];
+    if (payload == null) return EventsResponse(success: success, message: message, events: []);
+
+    final eventsData = payload['events'] as List<dynamic>;
+    final events = eventsData.map((event) => Event.fromJson(event)).toList();
 
     return EventsResponse(
       success: success,
       message: message,
-      events: null,
+      events: events,
     );
   }
 }

@@ -37,7 +37,9 @@ class RegisterService extends ChangeNotifier {
   }
 
   bool get isRegistered => _isRegistered;
+
   String? get phoneToken => _phoneToken;
+
   String? get errorMessage => _errorMessage;
 
   Future<bool> existPhone(String phone) async {

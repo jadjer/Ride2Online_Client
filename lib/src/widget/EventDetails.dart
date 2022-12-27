@@ -17,27 +17,20 @@
 import 'package:flutter/material.dart';
 import 'package:ride2online/src/_data.dart';
 
-class EventList extends StatelessWidget {
-  final List<Event> events;
-  final ValueChanged<Event> onTap;
+class EventDetails extends StatelessWidget {
+  final Event event;
 
-  const EventList({
+  const EventDetails({
     super.key,
-    required this.events,
-    required this.onTap,
+    required this.event,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: events.length,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(events[index].title),
-        subtitle: Text(events[index].subtitle),
-        onTap: () {
-          return onTap(events[index]);
-        },
-      ),
+    return ListView(
+      children: [
+        Text(event.text),
+      ],
     );
   }
 }

@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-import 'dart:ffi';
-
 class Location {
   // final int id;
   final String name;
   final String description;
   final String address;
-  final Float longitude;
-  final Float latitude;
-  final String startAt;
+  final double longitude;
+  final double latitude;
 
   Location({
     // required this.id,
@@ -32,7 +29,6 @@ class Location {
     required this.address,
     required this.longitude,
     required this.latitude,
-    required this.startAt,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) {
@@ -41,9 +37,8 @@ class Location {
       name: json['name'] as String,
       description: json['description'] as String,
       address: json['address'] as String,
-      longitude: json['longitude'] as Float,
-      latitude: json['latitude'] as Float,
-      startAt: json['start_at'] as String,
+      longitude: json['longitude'] as double,
+      latitude: json['latitude'] as double,
     );
   }
 
@@ -55,7 +50,6 @@ class Location {
       'address': address,
       'longitude': longitude,
       'latitude': latitude,
-      'start_at': startAt,
     };
   }
 }

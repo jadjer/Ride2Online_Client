@@ -33,6 +33,8 @@ abstract class AuthRepository {
 
   Future<AuthResponse> register(RegisterRequest request);
 
+  Future<ChangePasswordResponse> changePassword(ChangePasswordRequest request);
+
   Future<TokenResponse> getToken(LoginRequest request);
 
   Future<TokenResponse> refreshToken(Token request);
@@ -40,6 +42,4 @@ abstract class AuthRepository {
   Future<ExistResponse> existPhone(Phone phone);
 
   Future<ExistResponse> existUsername(Username username);
-
-  Future<ChangePasswordResponse> changePassword(ChangePasswordRequest request);
 }

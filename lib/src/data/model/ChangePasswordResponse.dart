@@ -27,9 +27,6 @@ class ChangePasswordResponse {
     final success = json['success'] as bool;
     final message = json['message'] as String;
 
-    return ChangePasswordResponse(
-        success: success,
-        message: message
-    );
+    return ChangePasswordResponse(success: success, message: message);
   }
 }

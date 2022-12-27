@@ -15,7 +15,11 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:ride2online/src/AppRouteName.dart';
 import 'package:ride2online/src/_data.dart';
+import 'package:ride2online/src/service/EventsService.dart';
 import 'package:ride2online/src/widget/EventList.dart';
 
 class EventsScreen extends StatefulWidget {
@@ -28,20 +32,34 @@ class EventsScreen extends StatefulWidget {
 class _EventsScreenState extends State<EventsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Events'),
-      ),
-      body: EventList(
-        events: const [],
-        onTap: _handleBookTapped,
+    final events = context.read<EventsService>();
+    final futureEvents = events.getEvents();
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Events'),
+        ),
+        body: FutureBuilder<List<Event>>(
+          future: futureEvents,
+          initialData: const [],
+          builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
+            if (snapshot.hasError) return Text(snapshot.error.toString());
+            if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+
+            return RefreshIndicator(
+              onRefresh: () {
+                return Future(() => setState(() {}));
+              },
+              child: EventList(events: snapshot.data!, onTap: _handleEventTapped),
+            );
+          },
+        ),
       ),
     );
   }
 
-  // RouteState get _routeState => RouteStateScope.of(context);
-
-  void _handleBookTapped(Event event) {
-    // _routeState.go('/events/${event.id}');
+  void _handleEventTapped(Event event) {
+    context.goNamed(AppRouteName.eventDetail, params: {'eventId': event.id.toString()});
   }
 }

@@ -15,6 +15,10 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ride2online/src/_data.dart';
+import 'package:ride2online/src/service/EventsService.dart';
+import 'package:ride2online/src/widget/EventDetails.dart';
 
 class EventDetailsScreen extends StatelessWidget {
   final int eventId;
@@ -23,22 +27,25 @@ class EventDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('event.title'),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Text(
-              'event.title',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text(
-              'event.organizer.username',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-          ],
+    final events = context.read<EventsService>();
+    final futureEvent = events.getEventById(eventId);
+
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: FutureBuilder<Event?>(
+          future: futureEvent,
+          builder: (BuildContext context, AsyncSnapshot<Event?> snapshot) {
+            if (snapshot.hasData) {
+              return EventDetails(event: snapshot.data!);
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );

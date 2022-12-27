@@ -15,28 +15,63 @@
  */
 
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/data/repository/EventsRepository.dart';
 
 class EventsService extends ChangeNotifier {
+  late List<Event> _events;
   late EventsRepository _repository;
 
   EventsService(EventsRepository repository) {
+    _events = [];
     _repository = repository;
   }
 
   Future<List<Event>> getEvents() async {
-    return [];
+    try {
+      log('Try get events');
+
+      final result = await _repository.getEvents();
+      if (!result.success) {
+        return _events;
+      }
+
+      final events = result.events;
+
+      _events = events;
+
+      log('Get data success');
+    } catch (e) {
+      log(e.toString());
+    }
+    return _events;
   }
 
-  FutureOr<Event?> getEventById(int eventId) async {
-    final result = await _repository.getEvent(eventId);
-    if (result.success) {
-      return result.event;
+  Future<Event?> getEventById(int eventId) async {
+    Event? event;
+
+    try {
+      log('Try get event with $eventId from local');
+
+      event = _events.firstWhere((event) => (event.id == eventId));
+    } catch (e) {
+      log(e.toString());
+
+      log('Try get event with $eventId from remove');
+
+      final result = await _repository.getEvent(eventId);
+      if (!result.success) {
+        return null;
+      }
+
+      event = result.event;
+
+      log('Get data success');
     }
 
-    return null;
+    return event;
   }
 }

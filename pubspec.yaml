@@ -1,10 +1,10 @@
 name: ride2online
 description: Moto events
 publish_to: 'none'
-version: 0.2.17+17
+version: 0.2.18+18
 
 environment:
-  sdk: '>=3.0.0-35.0.dev <4.0.0'
+  sdk: '>=3.0.0-65.0.dev <4.0.0'
 
 dependencies:
   flutter:

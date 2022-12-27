@@ -53,7 +53,12 @@ class EventsRepositoryImpl implements EventsRepository {
 
   @override
   Future<EventsResponse> getEvents() async {
-    throw EventsResponse(success: false, message: 'Unimplemented get events method');
+    final url = Uri.https(_baseUrl, 'events');
+
+    final response = await _client.get(url);
+    final responseJson = jsonDecode(response.body);
+
+    return EventsResponse.fromJson(responseJson);
   }
 
   @override

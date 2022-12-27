@@ -15,7 +15,6 @@
  */
 
 import 'Location.dart';
-import 'User.dart';
 
 class Event {
   final int id;
@@ -23,8 +22,10 @@ class Event {
   final String subtitle;
   final String text;
   final String picture;
-  final User organizer;
+
+  // final User organizer;
   final Location location;
+  final String startAt;
 
   Event({
     required this.id,
@@ -32,8 +33,9 @@ class Event {
     required this.subtitle,
     required this.text,
     required this.picture,
-    required this.organizer,
+    // required this.organizer,
     required this.location,
+    required this.startAt,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
@@ -43,8 +45,9 @@ class Event {
       subtitle: json['subtitle'] as String,
       text: json['text'] as String,
       picture: json['picture'] as String,
-      organizer: User.fromJson(json["organizer"]),
+      // organizer: User.fromJson(json["organizer"]),
       location: Location.fromJson(json["location"]),
+      startAt: json['start_at'] as String,
     );
   }
 
@@ -55,8 +58,9 @@ class Event {
       'subtitle': subtitle,
       'text': text,
       'picture': picture,
-      'organizer': organizer.toJson(),
+      // 'organizer': organizer.toJson(),
       'location': location.toJson(),
+      'start_at': startAt,
     };
   }
 }

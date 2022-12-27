@@ -26,6 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final auth = context.watch<AuthService>();
 
+    if (auth.isAuthenticated) {
+      Future.microtask(() {
+        context.goNamed(AppRouteName.welcome);
+      });
+    }
+
     return AuthScaffold(
       title: 'Login',
       widgets: [

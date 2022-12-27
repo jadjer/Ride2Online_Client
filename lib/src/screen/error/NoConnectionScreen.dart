@@ -15,28 +15,20 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:ride2online/src/_data.dart';
+import 'package:ride2online/src/widget/EmptyState.dart';
 
-class EventList extends StatelessWidget {
-  final List<Event> events;
-  final ValueChanged<Event> onTap;
-
-  const EventList({
-    super.key,
-    required this.events,
-    required this.onTap,
-  });
+class NoConnectionScreen extends StatelessWidget {
+  const NoConnectionScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: events.length,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(events[index].title),
-        subtitle: Text(events[index].subtitle),
-        onTap: () {
-          return onTap(events[index]);
-        },
+    return Scaffold(
+      body: EmptyState(
+        path: 'assets/images/no_connection.png',
+        onClick: () {},
+        title: 'No internet Connection',
+        textButton: 'Try Again',
+        description: 'Your internet connection is currently not available please check or try again.',
       ),
     );
   }

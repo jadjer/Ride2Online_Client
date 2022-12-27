@@ -48,6 +48,7 @@ class AuthService extends ChangeNotifier {
   }
 
   bool get isAuthenticated => _isAuthenticated;
+
   String? get errorMessage => _errorMessage;
 
   Future<bool> existUsername(String username) async {

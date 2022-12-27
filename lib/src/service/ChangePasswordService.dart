@@ -19,7 +19,6 @@ import 'dart:developer';
 import 'package:flutter/widgets.dart';
 import 'package:ride2online/src/_data.dart';
 import 'package:ride2online/src/data/model/ChangePasswordRequest.dart';
-import 'package:ride2online/src/data/model/RegisterRequest.dart';
 import 'package:ride2online/src/data/repository/AuthRepository.dart';
 
 class ChangePasswordService extends ChangeNotifier {
@@ -38,7 +37,9 @@ class ChangePasswordService extends ChangeNotifier {
   }
 
   bool get isChanged => _isChanged;
+
   String? get phoneToken => _phoneToken;
+
   String? get errorMessage => _errorMessage;
 
   Future<bool> existPhone(String phone) async {
