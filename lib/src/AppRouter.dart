@@ -20,7 +20,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ride2online/src/screen/auth/change_password/ChangePasswordPhoneScreen.dart';
 import 'package:ride2online/src/screen/auth/register/RegisterPhoneScreen.dart';
+import 'package:ride2online/src/screen/events/EventsMapScreen.dart';
 import 'package:ride2online/src/util/FadeTransitionPage.dart';
+import 'package:ride2online/src/widget/RideScaffold.dart';
 
 import 'AppRouteName.dart';
 import 'screen/auth/WelcomeScreen.dart';
@@ -57,6 +59,7 @@ class AppRouter {
         GoRoute(name: AppRouteName.register, path: 'register', pageBuilder: _registerPage),
       ]),
       GoRoute(name: AppRouteName.events, path: '/events', pageBuilder: _eventsPage, routes: [
+        GoRoute(name: AppRouteName.eventsMap, path: 'map', pageBuilder: _eventsMapPage),
         GoRoute(name: AppRouteName.eventDetail, path: ':eventId', pageBuilder: _eventDetailsPage, routes: [
           GoRoute(name: AppRouteName.eventEdit, path: 'edit', pageBuilder: _eventCreatePage),
         ]),
@@ -82,59 +85,114 @@ class AppRouter {
   }
 
   FadeTransitionPage _splashPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const SplashScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const SplashScreen(),
+    );
   }
 
   FadeTransitionPage _welcomePage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const WelcomeScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const WelcomeScreen(),
+    );
   }
 
   FadeTransitionPage _loginPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const LoginScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const LoginScreen(),
+    );
   }
 
   FadeTransitionPage _changePasswordPhonePage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const ChangePasswordPhoneScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const ChangePasswordPhoneScreen(),
+    );
   }
 
   FadeTransitionPage _changePasswordPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const ChangePasswordScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const ChangePasswordScreen(),
+    );
   }
 
   FadeTransitionPage _registerPhonePage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const RegisterPhoneScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const RegisterPhoneScreen(),
+    );
   }
 
   FadeTransitionPage _registerPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const RegisterScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const RegisterScreen(),
+    );
   }
 
   FadeTransitionPage _eventsPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const EventsScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const RideScaffold(
+        selectedTab: ScaffoldTab.events,
+        child: EventsScreen(),
+      ),
+    );
+  }
+
+  FadeTransitionPage _eventsMapPage(BuildContext context, GoRouterState state) {
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const RideScaffold(
+        selectedTab: ScaffoldTab.map,
+        child: EventsMapScreen(),
+      ),
+    );
   }
 
   FadeTransitionPage _eventDetailsPage(BuildContext context, GoRouterState state) {
     final eventId = int.parse(state.params['eventId']!);
 
-    return FadeTransitionPage(key: state.pageKey, child: EventDetailsScreen(eventId: eventId));
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: EventDetailsScreen(eventId: eventId),
+    );
   }
 
   FadeTransitionPage _eventCreatePage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const EventCreateScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const EventCreateScreen(),
+    );
   }
 
   FadeTransitionPage _userDetailsPage(BuildContext context, GoRouterState state) {
     final userId = int.parse(state.params['userId']!);
 
-    return FadeTransitionPage(key: state.pageKey, child: UserDetailsScreen(userId: userId));
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: UserDetailsScreen(userId: userId),
+    );
   }
 
   FadeTransitionPage _settingsPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: const SettingsScreen());
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: const RideScaffold(
+        selectedTab: ScaffoldTab.settings,
+        child: SettingsScreen(),
+      ),
+    );
   }
 
   FadeTransitionPage _errorPage(BuildContext context, GoRouterState state) {
-    return FadeTransitionPage(key: state.pageKey, child: ErrorScreen(error: state.error));
+    return FadeTransitionPage(
+      key: state.pageKey,
+      child: ErrorScreen(error: state.error),
+    );
   }
 
   FutureOr<String?> _guard(BuildContext context, GoRouterState state) {

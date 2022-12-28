@@ -42,9 +42,8 @@ class AuthService extends ChangeNotifier {
 
   Future<void> init() async {
     String? tokenAccess = await _storage.read(key: 'token_access');
-    if (tokenAccess != null) {
-      _isAuthenticated = true;
-    }
+
+    _isAuthenticated = (tokenAccess != null);
   }
 
   bool get isAuthenticated => _isAuthenticated;
@@ -73,11 +72,15 @@ class AuthService extends ChangeNotifier {
 
       await _storage.write(key: 'token_access', value: result.auth!.token.tokenAccess);
       await _storage.write(key: 'token_refresh', value: result.auth!.token.tokenRefresh);
+
+      _isAuthenticated = true;
     } else {
       log('Login failed');
 
       _errorMessage = result.message;
       log(_errorMessage!);
+
+      _isAuthenticated = false;
     }
 
     notifyListeners();
@@ -88,6 +91,8 @@ class AuthService extends ChangeNotifier {
 
     await _storage.delete(key: 'token_access');
     await _storage.delete(key: 'token_refresh');
+
+    _isAuthenticated = false;
 
     notifyListeners();
   }

@@ -24,6 +24,7 @@ class AppRouteName {
   static const String changePasswordPhone = 'change-password-phone';
   static const String changePassword = 'change-password';
   static const String events = 'events';
+  static const String eventsMap = 'events-map';
   static const String eventDetail = 'event-detail';
   static const String eventCreate = 'event-create';
   static const String eventEdit = 'event-edit';

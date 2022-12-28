@@ -1,7 +1,7 @@
 name: ride2online
 description: Moto events
 publish_to: 'none'
-version: 0.2.18+18
+version: 0.2.19+19
 
 environment:
   sdk: '>=3.0.0-65.0.dev <4.0.0'
@@ -18,6 +18,9 @@ dependencies:
   go_router: ^6.0.0
   lottie: ^2.1.0
   flutter_multi_formatter: ^2.9.11
+  curved_navigation_bar: ^1.0.3
+  adaptive_navigation: ^0.0.7
+  flutter_osm_plugin: ^0.42.0
 
 dev_dependencies:
   flutter_test:

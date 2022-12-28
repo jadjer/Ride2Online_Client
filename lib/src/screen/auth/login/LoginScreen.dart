@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (auth.isAuthenticated) {
       Future.microtask(() {
-        context.goNamed(AppRouteName.welcome);
+        context.goNamed(AppRouteName.events);
       });
     }
 
